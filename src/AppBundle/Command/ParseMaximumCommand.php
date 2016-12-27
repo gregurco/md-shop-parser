@@ -24,6 +24,8 @@ class ParseMaximumCommand extends ContainerAwareCommand
     /** @var EntityManager */
     protected $em;
 
+    protected $nextTimeRequest;
+
     protected function configure()
     {
         $this
@@ -81,7 +83,8 @@ class ParseMaximumCommand extends ContainerAwareCommand
      */
     protected function doRequest($url, $type = 'GET')
     {
-        sleep(5);
+        sleep($this->nextTimeRequest > time() ? $this->nextTimeRequest - time() : 0);
+        $this->nextTimeRequest = time() + 5;
 
         return $this->client->request($type, $url);
     }
