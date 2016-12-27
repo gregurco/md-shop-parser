@@ -19,8 +19,6 @@ class ParseMaximumCommand extends ContainerAwareCommand
     /** @var OutputInterface */
     protected $output;
 
-    protected $productRepository;
-
     /** @var EntityManager */
     protected $em;
 
@@ -37,7 +35,6 @@ class ParseMaximumCommand extends ContainerAwareCommand
     {
         $this->output = $output;
         $this->client = new Client();
-        $this->productRepository = $this->getContainer()->get('doctrine')->getRepository('AppBundle:Product');
         $this->em = $this->getContainer()->get('doctrine')->getManager();
 
         $this->doRequest($this->site)->filter('.navigation-item .header-item a')->each(function($category) {
