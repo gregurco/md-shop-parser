@@ -53,8 +53,11 @@ class ParseMaximumCommand extends ContainerAwareCommand
                     $categoryCrawler->filter('.item-box')->each(function ($itemBox) {
                         $this->output->writeln([$itemBox->filter('.product-title a')->text()]);
 
+                        preg_match('/(?<=product-)([0-9]+)(?=-)/', $itemBox->filter('.product-title a')->attr('href'), $matches);
+
                         $product = new Product();
                         $product->setShop('maximum');
+                        $product->setExternalId(count($matches) ? $matches[0] : null);
                         $product->setTitle($itemBox->filter('.product-title a')->text());
                         $product->setLink($this->site . $itemBox->filter('.product-title a')->attr('href'));
                         $product->setOnlinePrice($itemBox->filter('.prices .online-price')->count() ? $itemBox->filter('.prices .online-price')->text() : null);

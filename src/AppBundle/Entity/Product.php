@@ -24,6 +24,11 @@ class Product
     private $shop;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $externalId;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -69,6 +74,22 @@ class Product
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExternalId()
+    {
+        return $this->externalId;
+    }
+
+    /**
+     * @param mixed $externalId
+     */
+    public function setExternalId($externalId)
+    {
+        $this->externalId = $externalId;
     }
 
     /**
