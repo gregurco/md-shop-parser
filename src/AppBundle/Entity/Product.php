@@ -39,17 +39,17 @@ class Product
     private $link;
 
     /**
-     * @ORM\Column(type="decimal", scale=2, nullable=true)
+     * @ORM\Column(type="decimal", scale=2, nullable=true, options={"comment":"New price in online shop"})
      */
     private $onlinePrice;
 
     /**
-     * @ORM\Column(type="decimal", scale=2, nullable=true)
+     * @ORM\Column(type="decimal", scale=2, nullable=true, options={"comment":"New price in retail shop"})
      */
     private $specialPrice;
 
     /**
-     * @ORM\Column(type="decimal", scale=2, nullable=true)
+     * @ORM\Column(type="decimal", scale=2, nullable=true, options={"comment":"Old price"})
      */
     private $oldPrice;
 
