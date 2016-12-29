@@ -6,6 +6,10 @@
         <td>{{ topDiscountProduct.discountPercent|round(2, 'floor') }}</td>
         <td>{{ topDiscountProduct.product.shop }}</td>
         <td>{{ topDiscountProduct.product.createdAt|date("d/m/Y H:i") }}</td>
-        <td><a href="{{ topDiscountProduct.product.link }}" target="_blank">link</a></td>
+        <td>
+            <a href="{{ topDiscountProduct.product.link }}" target="_blank">
+                link <i class="fa fa-external-link" aria-hidden="true"></i>
+            </a>
+        </td>
     </tr>
 {% endfor %}
