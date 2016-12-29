@@ -9,6 +9,8 @@
 
         <link rel="stylesheet" href="{{ asset('assets/vendor/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendor/css/font-awesome.min.css') }}">
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
         <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 
         {% block stylesheets %}{% endblock %}
@@ -33,6 +35,7 @@
 
         <script src="{{ asset('assets/vendor/js/jquery.min.js') }}"></script>
         <script src="{{ asset('assets/vendor/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/js/main.js') }}"></script>
 
         {% block javascripts %}{% endblock %}
     </body>

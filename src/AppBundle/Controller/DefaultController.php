@@ -21,4 +21,20 @@ class DefaultController extends Controller
             'topDiscountProducts' => $productRepository->getTopDiscountProducts(),
         ]);
     }
+
+    /**
+     * @Route("/load-more-discount-products/{firstRecord}", name="load_more_discount_products", options={"expose"=true})
+     *
+     * @param $firstRecord
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function loadMoreDiscountProductsAction($firstRecord)
+    {
+        /** @var ProductRepository $productRepository */
+        $productRepository = $this->get('doctrine')->getRepository('AppBundle:Product');
+
+        return $this->render('default/_top_discount_rows.html.twig', [
+            'topDiscountProducts' => $productRepository->getTopDiscountProducts($firstRecord),
+        ]);
+    }
 }

@@ -16,7 +16,7 @@
             <h3 class="panel-title">Top Discount Products</h3>
         </div>
         <div class="panel-body">
-            <table class="table table-condensed table-striped">
+            <table class="table table-striped" id="moreDiscountProductsTable">
                 <thead>
                 <tr>
                     <th>Product Name</th>
@@ -24,23 +24,24 @@
                     <th>Old Price</th>
                     <th>Discount Percent</th>
                     <th>Shop</th>
+                    <th>Record Date</th>
                     <th>Link</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                {% for topDiscountProduct in topDiscountProducts %}
-                    <tr>
-                        <td>{{ topDiscountProduct.product.title }}</td>
-                        <td>{{ topDiscountProduct.product.onlinePrice }}</td>
-                        <td>{{ topDiscountProduct.product.oldPrice }}</td>
-                        <td>{{ topDiscountProduct.discountPercent|round(2, 'floor') }}</td>
-                        <td>{{ topDiscountProduct.product.shop }}</td>
-                        <td><a href="{{ topDiscountProduct.product.link }}" target="_blank">link</a></td>
-                    </tr>
-                {% endfor %}
+                    {{ include('default/_top_discount_rows.html.twig', {topDiscountProducts: topDiscountProducts}) }}
                 </tbody>
             </table>
+
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <button type="button" class="btn btn-default" id="loadMoreDiscountProducts">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                        Load more records
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

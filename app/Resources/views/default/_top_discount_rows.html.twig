@@ -1,0 +1,11 @@
+{% for topDiscountProduct in topDiscountProducts %}
+    <tr>
+        <td>{{ topDiscountProduct.product.title }}</td>
+        <td>{{ topDiscountProduct.product.onlinePrice }}</td>
+        <td>{{ topDiscountProduct.product.oldPrice }}</td>
+        <td>{{ topDiscountProduct.discountPercent|round(2, 'floor') }}</td>
+        <td>{{ topDiscountProduct.product.shop }}</td>
+        <td>{{ topDiscountProduct.product.createdAt|date("d/m/Y H:i") }}</td>
+        <td><a href="{{ topDiscountProduct.product.link }}" target="_blank">link</a></td>
+    </tr>
+{% endfor %}
