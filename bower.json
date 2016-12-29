@@ -1,0 +1,9 @@
+{
+  "name": "front",
+  "dependencies": {
+    "bootstrap": "~3.3.7",
+    "jquery": "~1.12.4",
+    "font-awesome": "fontawesome#^4.7.0"
+  },
+  "devDependencies": {}
+}

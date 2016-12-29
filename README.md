@@ -6,6 +6,9 @@ The main scope of this project is to parse product prices from famous shops in M
 ```
 $ composer install
 $ php bin/console doctrine:migration:migrate
+$ npm install
+$ ./node_modules/.bin/bower install
+$ ./node_modules/.bin/gulp
 ```
 
 ### Collect data

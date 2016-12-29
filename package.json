@@ -1,0 +1,13 @@
+{
+  "name": "",
+  "version": "1.0.0",
+  "main": "gulpfile.js",
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^2.2.0"
+  },
+  "dependencies": {
+    "del": "^2.2.2"
+  }
+}
