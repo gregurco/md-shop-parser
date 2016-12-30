@@ -3,29 +3,29 @@
 {% block container %}
     <form>
         <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Name of product...">
+            <input type="text" name="search" class="form-control" placeholder="{{ 'top_search.input_placeholder'|trans }}">
 
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Search</button>
+                <button class="btn btn-default" type="button">{{ 'top_search.search_button'|trans }}</button>
             </span>
         </div>
     </form>
 
     <div class="panel panel-default mr-top-25">
         <div class="panel-heading">
-            <h3 class="panel-title">Top Discount Products</h3>
+            <h3 class="panel-title">{{ 'top_discount_products.modal_header'|trans }}</h3>
         </div>
         <div class="panel-body">
             <table class="table table-striped" id="moreDiscountProductsTable">
                 <thead>
                 <tr>
-                    <th>Product Name</th>
-                    <th>Online Price</th>
-                    <th>Old Price</th>
-                    <th>Discount Percent</th>
-                    <th>Shop</th>
-                    <th>Record Date</th>
-                    <th>Link</th>
+                    <th>{{ 'top_discount_products.table_headers.product_name'|trans }}</th>
+                    <th>{{ 'top_discount_products.table_headers.online_price'|trans }}</th>
+                    <th>{{ 'top_discount_products.table_headers.old_price'|trans }}</th>
+                    <th>{{ 'top_discount_products.table_headers.discount_percent'|trans }}</th>
+                    <th>{{ 'top_discount_products.table_headers.shop'|trans }}</th>
+                    <th>{{ 'top_discount_products.table_headers.record_date'|trans }}</th>
+                    <th>{{ 'top_discount_products.table_headers.link'|trans }}</th>
                 </tr>
                 </thead>
 
@@ -38,7 +38,7 @@
                 <div class="col-xs-12 text-center">
                     <button type="button" class="btn btn-default" id="loadMoreDiscountProducts">
                         <i class="fa fa-refresh" aria-hidden="true"></i>
-                        Load more records
+                        {{ 'top_discount_products.load_more_records'|trans }}
                     </button>
                 </div>
             </div>

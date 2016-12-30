@@ -8,7 +8,7 @@
         <td>{{ topDiscountProduct.product.createdAt|date("d/m/Y H:i") }}</td>
         <td>
             <a href="{{ topDiscountProduct.product.link }}" target="_blank">
-                link <i class="fa fa-external-link" aria-hidden="true"></i>
+                {{ 'top_discount_products.external_link'|trans }} <i class="fa fa-external-link" aria-hidden="true"></i>
             </a>
         </td>
     </tr>

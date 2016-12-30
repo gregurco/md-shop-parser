@@ -1,0 +1,17 @@
+top_search:
+    search_button: Search
+    input_placeholder: Name of product...
+
+top_discount_products:
+    modal_header: Top Discount Products
+    load_more_records: Load more records
+    external_link: link
+
+    table_headers:
+        product_name: Product Name
+        online_price: Online Price
+        old_price: Old Price
+        discount_percent: Discount Percent
+        shop: Shop
+        record_date: Record Date
+        link: Link
