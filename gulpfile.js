@@ -7,7 +7,8 @@ var paths = {
         js: [
             'vendor/bower_components/bootstrap/dist/js/bootstrap.min.js',
             'vendor/bower_components/jquery/dist/jquery.min.js',
-            'vendor/bower_components/typeahead.js/dist/typeahead.bundle.js'
+            'vendor/bower_components/typeahead.js/dist/typeahead.bundle.js',
+            'vendor/bower_components/handlebars/handlebars.js'
         ],
         css: [
             'vendor/bower_components/bootstrap/dist/css/bootstrap.min.css',

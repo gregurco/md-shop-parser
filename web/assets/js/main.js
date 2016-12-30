@@ -31,7 +31,8 @@ $(function() {
                 // Map the remote source JSON array to a JavaScript object array
                 return $.map(response.results, function (result) {
                     return {
-                        value: result.title
+                        value: result.title,
+                        shop: result.shop,
                     };
                 });
             }
@@ -42,7 +43,15 @@ $(function() {
         name: '',
         display: 'value',
         limit: 100,
-        source: discountProducts
+        source: discountProducts,
+        templates: {
+            empty: [
+                '<div class="empty-message">',
+                    '<strong>Unable to find any Products that match the current query</strong>',
+                '</div>'
+            ].join('\n'),
+            suggestion: Handlebars.compile('<div><strong>{{value}}</strong> – {{shop}}</div>')
+        }
     });
 
     $topDiscountSearchTypeahead.bind('typeahead:select', function(ev, suggestion) {
