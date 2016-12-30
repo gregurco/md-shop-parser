@@ -6,7 +6,8 @@ var paths = {
     source: {
         js: [
             'vendor/bower_components/bootstrap/dist/js/bootstrap.min.js',
-            'vendor/bower_components/jquery/dist/jquery.min.js'
+            'vendor/bower_components/jquery/dist/jquery.min.js',
+            'vendor/bower_components/typeahead.js/dist/typeahead.bundle.js'
         ],
         css: [
             'vendor/bower_components/bootstrap/dist/css/bootstrap.min.css',
@@ -26,7 +27,11 @@ var paths = {
 
 /* Clean generated files */
 gulp.task('clean', function() {
-    return del([paths.dist.css, paths.dist.fonts, paths.dist.js]);
+    return del([
+        paths.dist.css + '/*.*',
+        paths.dist.fonts + '/*.*',
+        paths.dist.js + '/*.*'
+    ]);
 });
 
 /* Copy vendor files */

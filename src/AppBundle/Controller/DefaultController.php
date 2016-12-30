@@ -37,4 +37,18 @@ class DefaultController extends Controller
             'topDiscountProducts' => $productRepository->getTopDiscountProducts($firstRecord),
         ]);
     }
+
+    /**
+     * @Route("/search-discount-products/{query}", name="search_discount_products", options={"expose"=true})
+     *
+     * @param $query
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function searchDiscountProductsAction($query)
+    {
+        /** @var ProductRepository $productRepository */
+        $productRepository = $this->get('doctrine')->getRepository('AppBundle:Product');
+
+        return $this->json(['results' => $this->get('serializer')->normalize($productRepository->searchDiscountProducts($query))]);
+    }
 }

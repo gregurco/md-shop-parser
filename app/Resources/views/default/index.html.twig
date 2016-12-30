@@ -1,13 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block container %}
-    <form>
-        <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="{{ 'top_search.input_placeholder'|trans }}">
-
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button">{{ 'top_search.search_button'|trans }}</button>
-            </span>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-12">
+                <input type="text" name="search" class="form-control typeahead" id="topDiscountSearchTypeahead" placeholder="{{ 'top_search.input_placeholder'|trans }}">
+            </div>
         </div>
     </form>
 

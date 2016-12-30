@@ -31,4 +31,21 @@ class ProductRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    /**
+     * @param $query
+     * @return array
+     */
+    public function searchDiscountProducts($query)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+              SELECT p
+              FROM AppBundle:Product p
+              WHERE p.title like :query
+            ')
+            ->setParameter('query', '%' . $query . '%');
+
+        return $query->getResult();
+    }
 }
