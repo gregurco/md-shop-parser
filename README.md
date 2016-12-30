@@ -17,4 +17,5 @@ $ ./node_modules/.bin/gulp
 | ------- | ----------- |
 | php bin/console app:parse:bomba | Parse data from bomba.md |
 | php bin/console app:parse:maximum | Parse data from maximum.md |
+| php bin/console app:parse:foxmart | Parse data from foxmart.md |
 
