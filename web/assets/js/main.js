@@ -32,7 +32,7 @@ $(function() {
                 return $.map(response.results, function (result) {
                     return {
                         value: result.title,
-                        shop: result.shop,
+                        shop: result.shop
                     };
                 });
             }
