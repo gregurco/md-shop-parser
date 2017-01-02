@@ -39,13 +39,12 @@ class ProductRepository extends EntityRepository
      */
     public function searchDiscountProducts($query)
     {
-        $query = $this->getEntityManager()
-            ->createQuery('
-              SELECT p
-              FROM AppBundle:Product p
-              WHERE p.title like :query
-            ')
-            ->setParameter('query', '%' . $query . '%');
+        $query = $this->createQueryBuilder('p')
+            ->where('p.title like :query')
+            ->groupBy('p.externalId')
+            ->addGroupBy('p.shop')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery();
 
         return $query->getResult();
     }
