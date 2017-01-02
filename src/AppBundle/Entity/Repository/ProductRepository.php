@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 
 class ProductRepository extends EntityRepository
@@ -45,6 +46,27 @@ class ProductRepository extends EntityRepository
               WHERE p.title like :query
             ')
             ->setParameter('query', '%' . $query . '%');
+
+        return $query->getResult();
+    }
+
+    /**
+     * @param $shop
+     * @param $externalId
+     * @return array
+     */
+    public function searchForProductChart($shop, $externalId)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+              SELECT p
+              FROM AppBundle:Product p
+              WHERE p.shop = :shop
+                AND p.externalId = :externalId
+              ORDER BY p.createdAt ASC
+            ')
+            ->setParameter('shop', $shop)
+            ->setParameter('externalId', $externalId);
 
         return $query->getResult();
     }

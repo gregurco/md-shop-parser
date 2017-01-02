@@ -1,0 +1,22 @@
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">
+                    {{ productRecords|first.title }} [{{ productRecords|first.shop }}]
+                    <a href="{{ productRecords|first.link }}" target="_blank">
+                        {{ 'top_discount_products.external_link'|trans }} <i class="fa fa-external-link" aria-hidden="true"></i>
+                    </a>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <canvas class="chart" width="650" height="300"></canvas>
+                <input type="hidden" class="chart-datasets" value="{{ productRecords|chartDatasets }}">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

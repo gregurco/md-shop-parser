@@ -7,8 +7,13 @@
         <td>{{ topDiscountProduct.product.shop }}</td>
         <td>{{ topDiscountProduct.product.createdAt|date("d/m/Y H:i") }}</td>
         <td>
+            <a href="javascript:void(0)" class="show-product-chart" data-shop="{{ topDiscountProduct.product.shop }}" data-external-id="{{ topDiscountProduct.product.externalId }}">
+                <i class="fa fa-line-chart" aria-hidden="true"></i>
+            </a>
+        </td>
+        <td>
             <a href="{{ topDiscountProduct.product.link }}" target="_blank">
-                {{ 'top_discount_products.external_link'|trans }} <i class="fa fa-external-link" aria-hidden="true"></i>
+                <i class="fa fa-external-link" aria-hidden="true"></i>
             </a>
         </td>
     </tr>

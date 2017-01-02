@@ -6,6 +6,7 @@ use AppBundle\Entity\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends Controller
 {
@@ -49,6 +50,30 @@ class DefaultController extends Controller
         /** @var ProductRepository $productRepository */
         $productRepository = $this->get('doctrine')->getRepository('AppBundle:Product');
 
-        return $this->json(['results' => $this->get('serializer')->normalize($productRepository->searchDiscountProducts($query))]);
+        return $this->json(['results' =>
+            $this->get('serializer')->normalize($productRepository->searchDiscountProducts(urldecode($query)))]
+        );
+    }
+
+    /**
+     * @Route("/show-product-chart/{shop}/{externalId}", name="show_product_chart", options={"expose"=true})
+     *
+     * @param $shop
+     * @param $externalId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showProductChartAction($shop, $externalId)
+    {
+        /** @var ProductRepository $productRepository */
+        $productRepository = $this->get('doctrine')->getRepository('AppBundle:Product');
+        $productRecords = $productRepository->searchForProductChart($shop, $externalId);
+
+        if (!count($productRecords)) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->render('default/_product_chart.html.twig', [
+            'productRecords'  => $productRecords,
+        ]);
     }
 }
