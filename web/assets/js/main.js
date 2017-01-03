@@ -12,6 +12,8 @@ $(function() {
             success: function(date) {
                 $moreDiscountProductsTable.find('tbody').append(date);
 
+                hangProductChartOnTableElements();
+
                 $loadMoreDiscountProducts.removeClass('disabled');
                 $loadMoreDiscountProducts.find('.fa').removeClass('fa-spin fa-fw');
             }
@@ -59,11 +61,16 @@ $(function() {
         showProductChart(suggestion.shop, suggestion.externalId);
     });
 
-    $('.show-product-chart').on('click', function() {
+    hangProductChartOnTableElements();
+});
+
+function hangProductChartOnTableElements()
+{
+    $('.show-product-chart').off('click').on('click', function() {
         var $this = $(this);
         showProductChart($this.data('shop'), $this.data('external-id'));
     });
-});
+}
 
 function showProductChart(shop, externalId) {
     $.ajax({
