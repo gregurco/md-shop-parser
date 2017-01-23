@@ -49,7 +49,11 @@ class ParseFoxmartCommand extends ContainerAwareCommand
                 $product->setExternalId($itemBox->filter('.product-gid')->attr('value'));
                 $product->setTitle(trim($itemBox->filter('h4 a')->text()));
                 $product->setLink($this->site . $itemBox->filter('h4 a')->attr('href'));
-                $product->setOnlinePrice($this->preparePrice($itemBox->filter('.price a')->text()));
+                $product->setOnlinePrice(
+                    $itemBox->filter('.price a')->count() ?
+                        $this->preparePrice($itemBox->filter('.price a')->text()):
+                        null
+                );
                 $product->setOldPrice(
                     $itemBox->filter('.product_view del')->count() ?
                         $this->preparePrice($itemBox->filter('.product_view del')->text()) :
