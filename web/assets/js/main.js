@@ -3,6 +3,7 @@ $(function() {
     var $loadMoreDiscountProducts = $('#loadMoreDiscountProducts');
     var $topDiscountSearchTypeahead = $('#topDiscountSearchTypeahead');
     var $shopFilter = $('#shopFilter');
+    var $dateRangeFilter = $('#dateRangeFilter');
 
     $loadMoreDiscountProducts.on('click', function() {
         $loadMoreDiscountProducts.addClass('disabled');
@@ -60,12 +61,34 @@ $(function() {
 
     hangProductChartOnTableElements();
 
+    initDateRangePicker();
+
+    function initDateRangePicker() {
+        $dateRangeFilter.daterangepicker({
+            autoUpdateInput: false
+        });
+
+        $dateRangeFilter.on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+
+            $moreDiscountProductsTable.find('tbody').html('');
+
+            loadData();
+        });
+
+        $dateRangeFilter.on('cancel.daterangepicker', function() {
+            $(this).val('');
+        });
+    }
+
     function loadData() {
         $.ajax({
             url: Routing.generate('load_more_discount_products'),
             data: {
                 firstRecord: $moreDiscountProductsTable.find('tbody tr').length,
-                shop: $shopFilter.val()
+                shop: $shopFilter.val(),
+                startDate: $dateRangeFilter.val() ? $dateRangeFilter.data('daterangepicker').startDate.format('MM/DD/YYYY') : null,
+                endDate: $dateRangeFilter.val() ? $dateRangeFilter.data('daterangepicker').endDate.format('MM/DD/YYYY') : null
             },
             success: function(date) {
                 $moreDiscountProductsTable.find('tbody').append(date);

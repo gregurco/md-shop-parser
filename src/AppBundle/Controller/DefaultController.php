@@ -33,12 +33,14 @@ class DefaultController extends Controller
     {
         $firstRecord = $request->get('firstRecord');
         $shop = $request->get('shop');
+        $startDate = $request->get('startDate');
+        $endDate = $request->get('endDate');
 
         /** @var ProductRepository $productRepository */
         $productRepository = $this->get('doctrine')->getRepository('AppBundle:Product');
 
         return $this->render('default/_top_discount_rows.html.twig', [
-            'topDiscountProducts' => $productRepository->getTopDiscountProducts($firstRecord, $shop),
+            'topDiscountProducts' => $productRepository->getTopDiscountProducts($firstRecord, $shop, $startDate, $endDate),
         ]);
     }
 

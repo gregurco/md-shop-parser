@@ -10,11 +10,13 @@ var paths = {
             'vendor/bower_components/typeahead.js/dist/typeahead.bundle.js',
             'vendor/bower_components/handlebars/handlebars.js',
             'vendor/bower_components/moment/min/moment.min.js',
-            'vendor/bower_components/chart.js/dist/Chart.min.js'
+            'vendor/bower_components/chart.js/dist/Chart.min.js',
+            'vendor/bower_components/bootstrap-daterangepicker/daterangepicker.js'
         ],
         css: [
             'vendor/bower_components/bootstrap/dist/css/bootstrap.min.css',
-            'vendor/bower_components/font-awesome/css/font-awesome.min.css'
+            'vendor/bower_components/font-awesome/css/font-awesome.min.css',
+            'vendor/bower_components/bootstrap-daterangepicker/daterangepicker.css'
         ],
         fonts: [
             'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.*',

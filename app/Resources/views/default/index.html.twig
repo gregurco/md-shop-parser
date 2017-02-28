@@ -1,10 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block container %}
-    <form class="form-horizontal">
-        <div class="form-group">
-            <div class="col-xs-12">
-                <input type="text" name="search" class="form-control typeahead" id="topDiscountSearchTypeahead" placeholder="{{ 'top_search.input_placeholder'|trans }}">
+    <form>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <input type="text" name="search" class="form-control typeahead" id="topDiscountSearchTypeahead" placeholder="{{ 'top_search.input_placeholder'|trans }}">
+                </div>
             </div>
         </div>
 
@@ -18,6 +20,11 @@
                         <option value="bomba">Bomba</option>
                         <option value="foxmart">Foxmart</option>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateRangeFilter">Date range</label>
+                    <input type="text" class="form-control" name="daterange" id="dateRangeFilter" value="" />
                 </div>
             </div>
         </div>

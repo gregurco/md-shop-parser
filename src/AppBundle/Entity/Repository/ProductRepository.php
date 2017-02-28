@@ -11,9 +11,11 @@ class ProductRepository extends EntityRepository
     /**
      * @param int $offset
      * @param null $shop
+     * @param null $startDate
+     * @param null $endDate
      * @return array
      */
-    public function getTopDiscountProducts($offset = 0, $shop = null)
+    public function getTopDiscountProducts($offset = 0, $shop = null, $startDate = null, $endDate = null)
     {
         $qb = $this->createQueryBuilder('p1')
             ->select('p1 AS product')
@@ -28,6 +30,12 @@ class ProductRepository extends EntityRepository
         if ($shop) {
             $qb->andWhere('p1.shop = :shop');
             $qb->setParameter('shop', $shop);
+        }
+
+        if ($startDate && $endDate) {
+            $qb->andWhere('p1.createdAt BETWEEN :from AND :to')
+                ->setParameter('from', new \DateTime($startDate))
+                ->setParameter('to', new \DateTime($endDate));
         }
 
         return $qb->setFirstResult($offset)
