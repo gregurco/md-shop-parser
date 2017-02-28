@@ -70,3 +70,8 @@
     padding: 5px 10px;
     text-align: center;
 }
+
+.panel-body.form-inline {
+    margin-left: 15px;
+    margin-right: 15px;
+}

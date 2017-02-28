@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\ProductRepository")
- * @ORM\Table(name="product")
+ * @ORM\Table(name="product", indexes={@ORM\Index(name="external_id", columns={"external_id"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class Product

@@ -13,7 +13,7 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         /** @var ProductRepository $productRepository */
         $productRepository = $this->get('doctrine')->getRepository('AppBundle:Product');
@@ -24,18 +24,21 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/load-more-discount-products/{firstRecord}", name="load_more_discount_products", options={"expose"=true})
+     * @Route("/load-more-discount-products", name="load_more_discount_products", options={"expose"=true})
      *
-     * @param $firstRecord
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function loadMoreDiscountProductsAction($firstRecord)
+    public function loadMoreDiscountProductsAction(Request $request)
     {
+        $firstRecord = $request->get('firstRecord');
+        $shop = $request->get('shop');
+
         /** @var ProductRepository $productRepository */
         $productRepository = $this->get('doctrine')->getRepository('AppBundle:Product');
 
         return $this->render('default/_top_discount_rows.html.twig', [
-            'topDiscountProducts' => $productRepository->getTopDiscountProducts($firstRecord),
+            'topDiscountProducts' => $productRepository->getTopDiscountProducts($firstRecord, $shop),
         ]);
     }
 

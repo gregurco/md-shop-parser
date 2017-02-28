@@ -7,12 +7,27 @@
                 <input type="text" name="search" class="form-control typeahead" id="topDiscountSearchTypeahead" placeholder="{{ 'top_search.input_placeholder'|trans }}">
             </div>
         </div>
+
+        <div class="panel panel-default mr-top-25">
+            <div class="panel-body form-inline">
+                <div class="form-group">
+                    <label for="shopFilter">Shop</label>
+                    <select name="shop" class="form-control" id="shopFilter">
+                        <option value="">All</option>
+                        <option value="maximum">Maximum</option>
+                        <option value="bomba">Bomba</option>
+                        <option value="foxmart">Foxmart</option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </form>
 
     <div class="panel panel-default mr-top-25">
         <div class="panel-heading">
             <h3 class="panel-title">{{ 'top_discount_products.modal_header'|trans }}</h3>
         </div>
+
         <div class="panel-body">
             <table class="table table-striped" id="moreDiscountProductsTable">
                 <thead>

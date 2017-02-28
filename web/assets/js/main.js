@@ -2,22 +2,19 @@ $(function() {
     var $moreDiscountProductsTable = $('#moreDiscountProductsTable');
     var $loadMoreDiscountProducts = $('#loadMoreDiscountProducts');
     var $topDiscountSearchTypeahead = $('#topDiscountSearchTypeahead');
+    var $shopFilter = $('#shopFilter');
 
     $loadMoreDiscountProducts.on('click', function() {
         $loadMoreDiscountProducts.addClass('disabled');
         $loadMoreDiscountProducts.find('.fa').addClass('fa-spin fa-fw');
 
-        $.ajax({
-            url: Routing.generate('load_more_discount_products', {firstRecord: $moreDiscountProductsTable.find('tbody tr').length}),
-            success: function(date) {
-                $moreDiscountProductsTable.find('tbody').append(date);
+        loadData();
+    });
 
-                hangProductChartOnTableElements();
+    $shopFilter.on('change', function() {
+        $moreDiscountProductsTable.find('tbody').html('');
 
-                $loadMoreDiscountProducts.removeClass('disabled');
-                $loadMoreDiscountProducts.find('.fa').removeClass('fa-spin fa-fw');
-            }
-        });
+        loadData();
     });
 
     var discountProducts = new Bloodhound({
@@ -62,44 +59,62 @@ $(function() {
     });
 
     hangProductChartOnTableElements();
-});
 
-function hangProductChartOnTableElements()
-{
-    $('.show-product-chart').off('click').on('click', function() {
-        var $this = $(this);
-        showProductChart($this.data('shop'), $this.data('external-id'));
-    });
-}
+    function loadData() {
+        $.ajax({
+            url: Routing.generate('load_more_discount_products'),
+            data: {
+                firstRecord: $moreDiscountProductsTable.find('tbody tr').length,
+                shop: $shopFilter.val()
+            },
+            success: function(date) {
+                $moreDiscountProductsTable.find('tbody').append(date);
 
-function showProductChart(shop, externalId) {
-    $.ajax({
-        url: Routing.generate('show_product_chart', {shop: shop, externalId: externalId}),
-        success: function(data) {
-            var $data = $(data);
+                hangProductChartOnTableElements();
 
-            $('body').append($data);
-            $data.modal('show');
-            $data.on('shown.bs.modal', function (e) {
-                new Chart($data.find('.chart'), {
-                    type: 'line',
-                    data: {
-                        datasets: JSON.parse($data.find('.chart-datasets').val())
-                    },
-                    options: {
-                        scales: {
-                            xAxes: [{
-                                type: 'time',
-                                time: {
-                                    displayFormats: {
-                                        hour: 'DD/MM/YY'
+                $loadMoreDiscountProducts.removeClass('disabled');
+                $loadMoreDiscountProducts.find('.fa').removeClass('fa-spin fa-fw');
+            }
+        });
+    }
+
+    function hangProductChartOnTableElements()
+    {
+        $('.show-product-chart').off('click').on('click', function() {
+            var $this = $(this);
+            showProductChart($this.data('shop'), $this.data('external-id'));
+        });
+    }
+
+    function showProductChart(shop, externalId) {
+        $.ajax({
+            url: Routing.generate('show_product_chart', {shop: shop, externalId: externalId}),
+            success: function(data) {
+                var $data = $(data);
+
+                $('body').append($data);
+                $data.modal('show');
+                $data.on('shown.bs.modal', function (e) {
+                    new Chart($data.find('.chart'), {
+                        type: 'line',
+                        data: {
+                            datasets: JSON.parse($data.find('.chart-datasets').val())
+                        },
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    type: 'time',
+                                    time: {
+                                        displayFormats: {
+                                            hour: 'DD/MM/YY'
+                                        }
                                     }
-                                }
-                            }]
+                                }]
+                            }
                         }
-                    }
+                    });
                 });
-            });
-        }
-    });
-}
+            }
+        });
+    }
+});

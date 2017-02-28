@@ -2,35 +2,38 @@
 
 namespace AppBundle\Entity\Repository;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Product;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 
 class ProductRepository extends EntityRepository
 {
     /**
      * @param int $offset
-     * @param int $limit
+     * @param null $shop
      * @return array
      */
-    public function getTopDiscountProducts($offset = 0, $limit = 15)
+    public function getTopDiscountProducts($offset = 0, $shop = null)
     {
-        $query = $this->getEntityManager()
-            ->createQuery('
-              SELECT
-                p1 as product,
-                (100 - (p1.onlinePrice * 100 / p1.oldPrice)) as discountPercent
-              FROM AppBundle:Product p1
-              LEFT JOIN AppBundle:Product p2 WITH p1.id < p2.id AND p1.externalId = p2.externalId 
-              WHERE p1.onlinePrice is not null
-                AND p1.oldPrice is not null
-                AND p1.onlinePrice < p1.oldPrice
-                AND p2.id IS NULL
-              ORDER BY discountPercent DESC
-            ')
-            ->setFirstResult($offset)
-            ->setMaxResults($limit);
+        $qb = $this->createQueryBuilder('p1')
+            ->select('p1 AS product')
+            ->addSelect('(100 - (p1.onlinePrice * 100 / p1.oldPrice)) AS discountPercent')
+            ->leftJoin(Product::class, 'p2', Join::WITH, 'p1.id < p2.id AND p1.externalId = p2.externalId ')
+            ->where('p1.onlinePrice IS NOT NULL')
+            ->andWhere('p1.oldPrice IS NOT NULL')
+            ->andWhere('p1.onlinePrice < p1.oldPrice')
+            ->andWhere('p2.id IS NULL')
+            ->orderBy('discountPercent', 'DESC');
 
-        return $query->getResult();
+        if ($shop) {
+            $qb->andWhere('p1.shop = :shop');
+            $qb->setParameter('shop', $shop);
+        }
+
+        return $qb->setFirstResult($offset)
+            ->setMaxResults(15)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -39,14 +42,13 @@ class ProductRepository extends EntityRepository
      */
     public function searchDiscountProducts($query)
     {
-        $query = $this->createQueryBuilder('p')
-            ->where('p.title like :query')
+        return $this->createQueryBuilder('p')
+            ->where('p.title LIKE :query')
             ->groupBy('p.externalId')
             ->addGroupBy('p.shop')
             ->setParameter('query', '%' . $query . '%')
-            ->getQuery();
-
-        return $query->getResult();
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -56,17 +58,14 @@ class ProductRepository extends EntityRepository
      */
     public function searchForProductChart($shop, $externalId)
     {
-        $query = $this->getEntityManager()
-            ->createQuery('
-              SELECT p
-              FROM AppBundle:Product p
-              WHERE p.shop = :shop
-                AND p.externalId = :externalId
-              ORDER BY p.createdAt ASC
-            ')
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->where('p.shop = :shop')
+            ->andWhere('p.externalId = :externalId')
             ->setParameter('shop', $shop)
-            ->setParameter('externalId', $externalId);
-
-        return $query->getResult();
+            ->setParameter('externalId', $externalId)
+            ->addOrderBy('p.createdAt', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }
