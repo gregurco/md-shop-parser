@@ -13,19 +13,22 @@ class ProductRepository extends EntityRepository
      * @param null $shop
      * @param null $startDate
      * @param null $endDate
+     * @param null $oldPriceWasChanged
      * @return array
      */
-    public function getTopDiscountProducts($offset = 0, $shop = null, $startDate = null, $endDate = null)
+    public function getTopDiscountProducts($offset = 0, $shop = null, $startDate = null, $endDate = null, $oldPriceWasChanged = null)
     {
         $qb = $this->createQueryBuilder('p1')
             ->select('p1 AS product')
             ->addSelect('(100 - (p1.onlinePrice * 100 / p1.oldPrice)) AS discountPercent')
-            ->leftJoin(Product::class, 'p2', Join::WITH, 'p1.id < p2.id AND p1.externalId = p2.externalId ')
             ->where('p1.onlinePrice IS NOT NULL')
             ->andWhere('p1.oldPrice IS NOT NULL')
             ->andWhere('p1.onlinePrice < p1.oldPrice')
             ->andWhere('p2.id IS NULL')
             ->orderBy('discountPercent', 'DESC');
+
+        $joinCondition = $qb->expr()->andX()->add($qb->expr()->lt('p1.id', 'p2.id'));
+        $joinCondition->add($qb->expr()->eq('p1.externalId', 'p2.externalId'));
 
         if ($shop) {
             $qb->andWhere('p1.shop = :shop');
@@ -36,7 +39,15 @@ class ProductRepository extends EntityRepository
             $qb->andWhere('p1.createdAt BETWEEN :from AND :to')
                 ->setParameter('from', new \DateTime($startDate))
                 ->setParameter('to', new \DateTime($endDate));
+
+            $joinCondition->add($qb->expr()->between('p2.createdAt', ':from', ':to'));
         }
+
+        if ($oldPriceWasChanged) {
+            $qb->where('p1.oldPrice <> p2.oldPrice');
+        }
+
+        $qb->leftJoin(Product::class, 'p2', Join::WITH, $joinCondition);
 
         return $qb->setFirstResult($offset)
             ->setMaxResults(15)

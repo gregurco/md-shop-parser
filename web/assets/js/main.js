@@ -4,6 +4,7 @@ $(function() {
     var $topDiscountSearchTypeahead = $('#topDiscountSearchTypeahead');
     var $shopFilter = $('#shopFilter');
     var $dateRangeFilter = $('#dateRangeFilter');
+    var $oldPriceWasChanged = $('#oldPriceWasChanged');
 
     $loadMoreDiscountProducts.on('click', function() {
         $loadMoreDiscountProducts.addClass('disabled');
@@ -13,6 +14,12 @@ $(function() {
     });
 
     $shopFilter.on('change', function() {
+        $moreDiscountProductsTable.find('tbody').html('');
+
+        loadData();
+    });
+
+    $oldPriceWasChanged.on('change', function() {
         $moreDiscountProductsTable.find('tbody').html('');
 
         loadData();
@@ -88,7 +95,8 @@ $(function() {
                 firstRecord: $moreDiscountProductsTable.find('tbody tr').length,
                 shop: $shopFilter.val(),
                 startDate: $dateRangeFilter.val() ? $dateRangeFilter.data('daterangepicker').startDate.format('MM/DD/YYYY') : null,
-                endDate: $dateRangeFilter.val() ? $dateRangeFilter.data('daterangepicker').endDate.format('MM/DD/YYYY') : null
+                endDate: $dateRangeFilter.val() ? $dateRangeFilter.data('daterangepicker').endDate.format('MM/DD/YYYY') : null,
+                oldPriceWasChanged: $oldPriceWasChanged.is(':checked')
             },
             success: function(date) {
                 $moreDiscountProductsTable.find('tbody').append(date);
