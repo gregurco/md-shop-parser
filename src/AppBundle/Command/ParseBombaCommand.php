@@ -40,10 +40,8 @@ class ParseBombaCommand extends ContainerAwareCommand
         $this->doRequest($this->site)->filter('.menu-list .cat-brand-link')->each(function($category) {
             $categoryLink = $this->site . '/collection-json/?cat_id=' . $category->attr('rel');
 
-            $productsCrawler = $this->doRequest($categoryLink);
-            $rawProducts = json_decode($productsCrawler->text());
-
-            if ($rawProducts !== false) {
+            $rawProducts = json_decode($this->doRequestJson($categoryLink));
+            if ($rawProducts) {
                 foreach ($rawProducts as $rawProduct) {
                     $this->output->writeln([$rawProduct->name]);
 
@@ -73,9 +71,25 @@ class ParseBombaCommand extends ContainerAwareCommand
      */
     protected function doRequest($url, $type = 'GET')
     {
-        sleep($this->nextTimeRequest > time() ? $this->nextTimeRequest - time() : 0);
-        $this->nextTimeRequest = time() + 5;
+        $this->requestDelay();
 
         return $this->client->request($type, $url);
+    }
+
+    /**
+     * @param $url
+     * @return bool|string
+     */
+    protected function doRequestJson($url)
+    {
+        $this->requestDelay();
+
+        return file_get_contents($url);
+    }
+
+    protected function requestDelay()
+    {
+        sleep($this->nextTimeRequest > time() ? $this->nextTimeRequest - time() : 0);
+        $this->nextTimeRequest = time() + 5;
     }
 }
